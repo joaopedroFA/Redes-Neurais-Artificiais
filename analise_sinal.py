@@ -57,4 +57,8 @@ class analiseEspectral():
         picosFrequencias = arrayFrequencias[indicesPicos]
         picosAmplitudes = arrayAmplitudes[indicesPicos]
 
-        return picosFrequencias, picosAmplitudes
+        indicesMaiores = np.argsort(picosAmplitudes)[-numeroAmostras:]
+        indices_freq_crescente = np.argsort(picosFrequencias[indicesMaiores])
+
+        return (picosFrequencias[indicesMaiores][indices_freq_crescente], 
+            picosAmplitudes[indicesMaiores][indices_freq_crescente])
