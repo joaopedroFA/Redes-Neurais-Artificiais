@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from pydub import AudioSegment
+from scipy.signal import find_peaks
 
 class analiseEspectral():
     @staticmethod
@@ -33,8 +34,10 @@ class analiseEspectral():
             if soma_amp > 0:
                 amplitudes = amplitudes / soma_amp
         return frequenciasNyquist, amplitudes
+    
     @staticmethod
     def espectroAmplitude(frequenciasComplexas, amplitudes, frequenciadeCorte):
+
         plt.figure(figsize=(10, 4))
         plt.plot(frequenciasComplexas, amplitudes)
         plt.xlim(0, frequenciadeCorte)
@@ -43,3 +46,15 @@ class analiseEspectral():
         plt.ylabel("Amplitudes (u.a)")
         plt.grid(True, alpha=0.3)
         plt.show()
+
+    @staticmethod
+    def selecionarPeaks(frequenciasComplexas, amplitudes, frequenciadeCorte, numeroAmostras):
+        faixadeFrequencia = frequenciasComplexas <= frequenciadeCorte
+        arrayFrequencias = frequenciasComplexas[faixadeFrequencia]
+        arrayAmplitudes = amplitudes[faixadeFrequencia]
+
+        indicesPicos, _ = find_peaks(arrayAmplitudes, distance=5)
+        picosFrequencias = arrayFrequencias[indicesPicos]
+        picosAmplitudes = arrayAmplitudes[indicesPicos]
+
+        return picosFrequencias, picosAmplitudes
