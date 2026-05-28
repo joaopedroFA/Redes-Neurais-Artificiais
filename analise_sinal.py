@@ -7,7 +7,7 @@ from scipy.signal import find_peaks
 
 class analiseEspectral():
     @staticmethod
-    def analiseporFourier(caminhoArquivo, nomeArquivo, amplitudeNormalizada = False):
+    def analiseporFourier(caminhoArquivo, nomeArquivo):
         
         # Importando os arquivos
         arquivoAudio = os.path.join(caminhoArquivo, nomeArquivo)
@@ -29,10 +29,7 @@ class analiseEspectral():
         frequenciasNyquist = frequencias[:metadeAmostras]
         amplitudes         = np.abs(fftResultado[:metadeAmostras]) * 2 / numerodeAlmostras
 
-        if amplitudeNormalizada:
-            soma_amp = np.sum(amplitudes)
-            if soma_amp > 0:
-                amplitudes = amplitudes / soma_amp
+
         return frequenciasNyquist, amplitudes
     
     @staticmethod
