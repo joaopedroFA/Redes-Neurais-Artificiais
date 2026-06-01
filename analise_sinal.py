@@ -44,18 +44,3 @@ class analiseEspectral():
         plt.grid(True, alpha=0.3)
         plt.show()
 
-    @staticmethod
-    def selecionarPeaks(frequenciasComplexas, amplitudes, frequenciadeCorte, numeroAmostras):
-        faixadeFrequencia = frequenciasComplexas <= frequenciadeCorte
-        arrayFrequencias = frequenciasComplexas[faixadeFrequencia]
-        arrayAmplitudes = amplitudes[faixadeFrequencia]
-
-        indicesPicos, _ = find_peaks(arrayAmplitudes, distance=5)
-        picosFrequencias = arrayFrequencias[indicesPicos]
-        picosAmplitudes = arrayAmplitudes[indicesPicos]
-
-        indicesMaiores = np.argsort(picosAmplitudes)[-numeroAmostras:]
-        indices_freq_crescente = np.argsort(picosFrequencias[indicesMaiores])
-
-        return (picosFrequencias[indicesMaiores][indices_freq_crescente], 
-            picosAmplitudes[indicesMaiores][indices_freq_crescente])
